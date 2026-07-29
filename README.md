@@ -1,10 +1,10 @@
-# ai_health_impact_ml
+# atp_tennis_match_predictor_ml
 
-AI Impact on Health — Machine Learning Project
+ATP Tennis (2000–2026) — Machine Learning Project
 
-Dataset: `AI_Impact_on_Health_Dataset_5000_Enhanced.csv` (5000 participants, tracking demographics, AI health tool usage, and health outcomes before/after).
+Dataset: ATP Tennis daily-update dataset, ~68,000 rows, one row per match (Tournament, Date, Series, Court, Surface, Round, Best of, Player_1, Player_2, Winner, Rank_1, Rank_2, Pts_1, Pts_2, Odd_1, Odd_2, Score).
 
-Goal: predict whether a participant's health outcome falls into **Declined / No Change / Improved / Highly Improved** (`Improvement_Category`), based on who they are and how they use AI health tools — _not_ based on the health scores that were used to compute that label.
+Goal: predict which player wins a given match, based only on information known **before** the match is played — not the score or outcome of the match itself.
 
 In this project, you:
 
@@ -22,10 +22,12 @@ Then:
 
 ## Features (X) and target (y)
 
-- **X (features):** `Age`, `Gender`, `Chronic_Condition`, `BMI`, `AI_Tool_Type`, `AI_Health_App_Usage_Hours_Per_Week`, `Exercise_Hours_Per_Week`
-- **y (target):** `Improvement_Category`
+- **X (features):** `Rank_1`, `Rank_2`, `Pts_1`, `Pts_2`, `Surface`, `Court`, `Series`, `Round`, `Best of`
+- **y (target):** did `Player_1` win the match? (1/0, derived from `Winner`)
 
-**Excluded from X (data leakage):** `Health_Score_Before_AI`, `Health_Score_After_AI`, `Improvement`, `Improvement_Percentage`, `Improvement_Per_AI_Hour`, `Satisfaction_Score`, `Satisfaction_Level`, `Risk_Category` — these are all derived from or tied to the same outcome you're trying to predict.
+**Excluded from X (data leakage):** `Score`, `Winner` — these are only known **after** the match has been played. `Odd_1`/`Odd_2` are also excluded, since they're a bookmaker's own prediction, not raw match information.
+
+**Known caveat to check before training:** whether `Player_1`/`Player_2` order is arbitrary or systematically tied to rank — if the higher-ranked player is consistently listed as `Player_1`, the model could learn that ordering instead of real skill signals, so this should be verified (and corrected if needed) during preprocessing.
 
 ## Bonus points
 
