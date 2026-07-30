@@ -40,3 +40,11 @@ Then:
 Understand the full machine learning pipeline:
 
 - data collection → cleaning → training → evaluation → visualization
+
+## Results
+
+- Rows with `-1` in `Rank_1`, `Rank_2`, `Pts_1`, or `Pts_2` (placeholder for missing data, mostly pre-mid-2005 matches) were dropped before training.
+- Class balance check: `sum(y) / len(y) ≈ 0.5`, confirming `Player_1`/`Player_2` order is not systematically tied to rank.
+- **Logistic Regression:** ~66.1% accuracy
+- **Random Forest Classifier:** ~61.8% accuracy
+  Logistic Regression outperformed Random Forest, likely because the relationship between rank/points and match outcome is fairly smooth and close to linear.
